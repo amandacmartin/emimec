@@ -143,6 +143,7 @@
       background: #334155;
     }
 
+    /* Formulário Fixo */
     .formula-bar {
       position: fixed;
       bottom: 0;
@@ -203,6 +204,7 @@
       border: 1px solid var(--border);
     }
 
+    /* Certificado / Relatório Final */
     .certificate {
       border: 2px dashed var(--primary);
       background: #f0f9ff;
@@ -275,11 +277,14 @@
     <h1>Exercícios Práticos de Capacidade</h1>
   </header>
 
-  <main id="app"></main>
+  <main id="app">
+    <!-- As questões serão inseridas aqui pelo JS -->
+  </main>
 
+  <!-- Formulário Fixo -->
   <div class="formula-bar">
     <button class="formula-toggle" onclick="toggleFormula()">
-      📐 Formulário &amp; Relações
+      📐 Formulário & Relações
     </button>
     <div class="formula-content" id="formulaDrawer">
       <div class="formula-grid">
@@ -304,7 +309,7 @@
       {
         id: "q1",
         title: "Questão 1",
-        text: "Um centro de trabalho consiste em três máquinas. Cada máquina está programada para 16 horas por dia e cinco dias por semana.<br><br>1) Qual é o tempo semanal disponível, em horas, do centro de trabalho?<br>2) Considerando que o centro de trabalho utiliza 75% do tempo disponível, quantas horas são efetivamente trabalhadas?",
+        text: "Um centro de trabalho consiste em três máquinas. Cada máquina está programada para 16 horas por dia e cinco dias por semana.<br><br>a) Qual é o tempo semanal disponível, em horas, do centro de trabalho?<br>b) Considerando que o centro de trabalho utiliza 75% do tempo disponível, quantas horas são efetivamente trabalhadas?",
         options: [
           { text: "A) 160 horas / 120 horas", correct: false },
           { text: "B) 240 horas / 150 horas", correct: false },
@@ -316,7 +321,7 @@
       {
         id: "q2",
         title: "Questão 2",
-        text: "Em uma lanchonete a capacidade máxima da chapa para hambúrguer é de 12.000 unidades por dia, sendo que atualmente são vendidos 7.080 hambúrgueres. Qual é a taxa de utilização dessa chapa?",
+        text: "Em uma lanchonete a capacidade máxima da chapa para hambúrguer é de 12.000 unidades por dia, sendo que atualmente são vendidos 7080 hamburgueres. Qual é a taxa de utilização dessa chapa? ",
         options: [
           { text: "A) 49%", correct: false },
           { text: "B) 52%", correct: false },
@@ -328,7 +333,7 @@
       {
         id: "q3",
         title: "Questão 3",
-        text: "Supor que a prensa é usada apenas com os dois produtos A e B e descontar do tempo disponível uma folga para manutenção e reparos no valor de 10% desse tempo disponível. Qual é a eficiência da operação?",
+        text: "Na manufatura de dois produtos A e B existe certa operação de prensagem. Para o produto A, a operação toma 8 minutos, enquanto para o produto B toma apenas 2 minutos. Estima-se que a demanda mensal seja de 500 unidades para o produto A e 1.000 unidades para o produto B. Determinar a capacidade produtiva (da prensa) que está sendo usada, supondo um mês de 22 dias úteis de 8 horas diárias. Supor que a prensa é usada apenas com os dois produtos A e B e descontar do tempo disponível uma folga para manutenção e reparos no valor de 10% desse tempo disponível. Qual é a eficiência da operação?",
         options: [
           { text: "A) 55,42%", correct: false },
           { text: "B) 60,00%", correct: false },
@@ -352,7 +357,7 @@
       {
         id: "q5",
         title: "Questão 5",
-        text: "Uma determinada empresa, fabricante de tecidos automotivos, está desenvolvendo um estudo para o dimensionamento de sua capacidade produtiva. Num levantamento prévio constatou-se que a empresa possui 100 máquinas em sua unidade fabril e cada máquina é capaz de produzir 20m de tecido por hora. A empresa trabalha num regime diário de apenas um turno de 8 horas e durante 22 dias no mês. Para um estudo de eficiência foram apontados todos os tempos de paradas das máquinas no último mês, que totalizaram 410 h. Sendo assim podemos afirmar que a capacidade Teórica/projetada, a Produção Real e a Utilização da produção, são respectivamente:",
+        text: "Uma determinada empresa, fabricante de tecidos automotivos, está desenvolvendo um estudo para o dimensionamento de sua capacidade produtiva. Num levantamento prévio constatou-se que a empresa possui 100 máquinas em sua unidade fabril e cada máquina é capaz de produzir 20m de tecido por hora. A empresa trabalha num regime diário de apenas um turno de 8 horas e durante 22 dias no mês.<br>Para um estudo de eficiência foram apontados todos os tempos de paradas das máquinas no último mês, que totalizaram 410 h (considere paradas planejadas e não planejadas). Sendo assim podemos afirmar que a capacidade Teórica/projetada, a Produção Real e a Utilização da produção, são respectivamente:",
         options: [
           { text: "A) 352.000m, 320.000m e 90,90%", correct: false },
           { text: "B) 352.000m, 343.800m e 97,67%", correct: true },
@@ -364,7 +369,7 @@
       {
         id: "q6",
         title: "Questão 6",
-        text: "Uma empresa fabrica três modelos de drones: Vortex (2,5h), Elysia (1,5h) e Moln (0,75h). Há 600 homens-horas disponíveis por semana.<br><br>1) Supondo que o mix da demanda esteja na proporção 2:2:4, qual a capacidade produtiva semanal?<br>2) Suponha que a demanda no mix mudou para 3:2:3, qual é a capacidade produtiva semanal?",
+        text: "Uma pequena empresa de engenharia sediada em Estocolmo, Suécia, fabrica três modelos de drones comerciais — Vortex, Elysia e Moln (nuvem). O modelo Vortex pode ser montado em 2,5 horas, o Elysia, em 1,5 hora e o Moln, em 0,75 hora. A empresa tem 600 homens-horas disponíveis para montagem por semana. <br>a)	Supondo que o mix da demanda pelos drones Vortex, Elysia e Moln esteja em uma proporção 2:2:4, qual a capacidade produtiva semanal? <br> b)	Suponha que a demanda no mix de atividades mudou para 3:2:3, qual é a capacidade produtiva semanal?",
         options: [
           { text: "A) 412,5 unidades / 350,8 unidades", correct: false },
           { text: "B) 436,4 unidades / 376,5 unidades", correct: true },
@@ -376,7 +381,7 @@
       {
         id: "q7",
         title: "Questão 7 (Extra)",
-        text: "Uma empresa está analisando uma família de produtos que utilizam a mesma matéria-prima e que são processados em 4 centros produtivos dispostos em linha (A, B, C e D). Não há perdas de material dentro do processo. Cada centro produtivo pode processar a quantidade de material conforme segue: Centro Produtivo A = 2.000 toneladas por mês; Centro Produtivo B = 1.800 toneladas por mês; Centro Produtivo C = 2.200 toneladas por mês; Centro Produtivo D = 1.900 toneladas por mês. Qual é a capacidade do sistema?",
+        text: "7.	Uma empresa está analisando uma família de produtos que utilizam a mesma matéria-prima e que são processados em 4 centros produtivos dispostos em linha (A, B, C e D). Não há perdas de material dentro do processo. Cada centro produtivo pode processar a quantidade de material conforme segue: <br> Centro Produtivo A = 2.000 toneladas por mês.<br> Centro Produtivo B = 1.800 toneladas por mês.<br> Centro Produtivo C = 2.200 toneladas por mês.<br> Centro Produtivo D = 1.900 toneladas por mês.<br>Qual é a capacidade do sistema?",
         options: [
           { text: "A) 1.800 T / mês", correct: true },
           { text: "B) 1.900 T / mês", correct: false },
@@ -457,6 +462,7 @@
       });
 
       const percentage = Math.round((correctCount / questions.length) * 100);
+
       const app = document.getElementById("app");
       
       let resultHtml = `
@@ -512,7 +518,6 @@
       drawer.classList.toggle("open");
     }
 
-    // Inicializa o questionário na tela
     renderAllQuestions();
   </script>
 </body>
