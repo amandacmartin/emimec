@@ -143,7 +143,6 @@
       background: #334155;
     }
 
-    /* Formulário Fixo */
     .formula-bar {
       position: fixed;
       bottom: 0;
@@ -204,7 +203,6 @@
       border: 1px solid var(--border);
     }
 
-    /* Certificado / Relatório Final */
     .certificate {
       border: 2px dashed var(--primary);
       background: #f0f9ff;
@@ -277,14 +275,11 @@
     <h1>Exercícios Práticos de Capacidade</h1>
   </header>
 
-  <main id="app">
-    <!-- As questões serão inseridas aqui pelo JS -->
-  </main>
+  <main id="app"></main>
 
-  <!-- Formulário Fixo -->
   <div class="formula-bar">
     <button class="formula-toggle" onclick="toggleFormula()">
-      📐 Formulário & Relações
+      📐 Formulário &amp; Relações
     </button>
     <div class="formula-content" id="formulaDrawer">
       <div class="formula-grid">
@@ -333,7 +328,7 @@
       {
         id: "q3",
         title: "Questão 3",
-        text: "Supor que a prensa é usada apenas com os dois produtos A e B e descontar do tempo disponível uma folga para manutenção e reparos no valor de 10% desse tempo disponível. Qual é a eficiência da operação?",
+        text: "Supor que a prensa é usada apenas com os dois produtos A e B e descontar do tempo disponível uma folga para manutenção e reparos no valor de 10% desse tempo disponível. Qual é a eficiência da operação?",
         options: [
           { text: "A) 55,42%", correct: false },
           { text: "B) 60,00%", correct: false },
@@ -357,7 +352,7 @@
       {
         id: "q5",
         title: "Questão 5",
-        text: "5.	Uma determinada empresa, fabricante de tecidos automotivos, está desenvolvendo um estudo para o dimensionamento de sua capacidade produtiva. Num levantamento prévio constatou-se que a empresa possui 100 máquinas em sua unidade fabril e cada máquina é capaz de produzir 20m de tecido por hora. A empresa trabalha num regime diário de apenas um turno de 8 horas e durante 22 dias no mês. Para um estudo de eficiência foram apontados todos os tempos de paradas das máquinas no último mês, que totalizaram 410 h (considere paradas planejadas e não planejadas). Sendo assim podemos afirmar que a capacidade Teórica/projetada, a Produção Real e a Utilização da produção, são respectivamente:",
+        text: "Uma determinada empresa, fabricante de tecidos automotivos, está desenvolvendo um estudo para o dimensionamento de sua capacidade produtiva. Num levantamento prévio constatou-se que a empresa possui 100 máquinas em sua unidade fabril e cada máquina é capaz de produzir 20m de tecido por hora. A empresa trabalha num regime diário de apenas um turno de 8 horas e durante 22 dias no mês. Para um estudo de eficiência foram apontados todos os tempos de paradas das máquinas no último mês, que totalizaram 410 h. Sendo assim podemos afirmar que a capacidade Teórica/projetada, a Produção Real e a Utilização da produção, são respectivamente:",
         options: [
           { text: "A) 352.000m, 320.000m e 90,90%", correct: false },
           { text: "B) 352.000m, 343.800m e 97,67%", correct: true },
@@ -381,7 +376,7 @@
       {
         id: "q7",
         title: "Questão 7 (Extra)",
-        text: "7.	Uma empresa está analisando uma família de produtos que utilizam a mesma matéria-prima e que são processados em 4 centros produtivos dispostos em linha (A, B, C e D). Não há perdas de material dentro do processo. Cada centro produtivo pode processar a quantidade de material conforme segue: Centro Produtivo A = 2.000 toneladas por mês; Centro Produtivo B = 1.800 toneladas por mês; Centro Produtivo C = 2.200 toneladas por mês; Centro Produtivo B = 1.900 toneladas por mês. Qual é a capacidade do sistema?",
+        text: "Uma empresa está analisando uma família de produtos que utilizam a mesma matéria-prima e que são processados em 4 centros produtivos dispostos em linha (A, B, C e D). Não há perdas de material dentro do processo. Cada centro produtivo pode processar a quantidade de material conforme segue: Centro Produtivo A = 2.000 toneladas por mês; Centro Produtivo B = 1.800 toneladas por mês; Centro Produtivo C = 2.200 toneladas por mês; Centro Produtivo D = 1.900 toneladas por mês. Qual é a capacidade do sistema?",
         options: [
           { text: "A) 1.800 T / mês", correct: true },
           { text: "B) 1.900 T / mês", correct: false },
@@ -462,7 +457,6 @@
       });
 
       const percentage = Math.round((correctCount / questions.length) * 100);
-
       const app = document.getElementById("app");
       
       let resultHtml = `
@@ -518,6 +512,7 @@
       drawer.classList.toggle("open");
     }
 
+    // Inicializa o questionário na tela
     renderAllQuestions();
   </script>
 </body>
