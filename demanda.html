@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade Prática - Previsão de Demanda e Estudo de Caso</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 12mm 10mm;
+            background-color: #f8fafc;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.45;
+            padding: 10px;
+            font-size: 10pt;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background-color: #1b365d;
+            color: #ffffff;
+            padding: 18px 20px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+
+        header h1 {
+            font-size: 1.35rem;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            font-size: 0.88rem;
+            color: #cbd5e1;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            padding: 16px 18px;
+            margin-bottom: 18px;
+            page-break-inside: avoid;
+        }
+
+        .meta-grid {
+            display: table;
+            width: 100%;
+        }
+
+        .meta-row {
+            display: table-row;
+        }
+
+        .meta-cell {
+            display: table-cell;
+            padding: 4px 8px;
+            vertical-align: middle;
+        }
+
+        .input-label {
+            font-size: 0.82rem;
+            font-weight: bold;
+            color: #475569;
+            text-transform: uppercase;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 6px 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            outline: none;
+            background-color: #fff;
+        }
+
+        .date-display {
+            display: inline-block;
+            padding: 6px 12px;
+            background-color: #e2e8f0;
+            color: #1e293b;
+            font-weight: bold;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        h2.section-title {
+            font-size: 1.1rem;
+            color: #1b365d;
+            border-left: 4px solid #2563eb;
+            padding-left: 10px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            page-break-after: avoid;
+        }
+
+        p.text-p {
+            margin-bottom: 10px;
+            text-align: justify;
+            font-size: 0.88rem;
+        }
+
+        ul.bullet-list {
+            margin: 6px 0 12px 20px;
+            font-size: 0.88rem;
+        }
+
+        ul.bullet-list li {
+            margin-bottom: 4px;
+        }
+
+        .textarea-box {
+            width: 100%;
+            min-height: 80px;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 0.88rem;
+            resize: vertical;
+            margin-top: 6px;
+            margin-bottom: 10px;
+            outline: none;
+            background: #ffffff;
+        }
+
+        /* Formulas Card */
+        .formulas-card {
+            background-color: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            page-break-inside: avoid;
+        }
+
+        .formulas-card h3 {
+            font-size: 0.95rem;
+            color: #1e40af;
+            margin-bottom: 8px;
+        }
+
+        .formulas-grid {
+            display: table;
+            width: 100%;
+        }
+
+        .formula-col {
+            display: table-cell;
+            width: 33.33%;
+            padding: 0 6px;
+            vertical-align: top;
+        }
+
+        .formula-item {
+            background: #ffffff;
+            border: 1px solid #dbeafe;
+            padding: 8px 10px;
+            border-radius: 5px;
+            height: 100%;
+        }
+
+        .formula-title {
+            font-weight: bold;
+            font-size: 0.78rem;
+            color: #1e3a8a;
+            margin-bottom: 4px;
+            text-align: center;
+        }
+
+        .formula-expr {
+            text-align: center;
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+            font-size: 0.98rem;
+            font-weight: bold;
+            color: #1d4ed8;
+            margin: 4px 0;
+            background: #f0f9ff;
+            padding: 4px;
+            border-radius: 4px;
+        }
+
+        .formula-desc {
+            font-size: 0.7rem;
+            color: #64748b;
+            line-height: 1.2;
+        }
+
+        /* Tables Styling */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+            background: #ffffff;
+        }
+
+        th {
+            background-color: #0f172a;
+            color: #ffffff;
+            padding: 7px 8px;
+            font-weight: 600;
+            text-align: center;
+            border: 1px solid #334155;
+            font-size: 0.8rem;
+        }
+
+        td {
+            padding: 6px 8px;
+            border: 1px solid #cbd5e1;
+            text-align: center;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        input.table-input {
+            width: 100%;
+            padding: 5px 6px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.82rem;
+            outline: none;
+            background-color: #fff;
+        }
+
+        input.readonly-input {
+            background-color: #f1f5f9;
+            color: #334155;
+            font-weight: bold;
+            cursor: not-allowed;
+            border: 1px solid #cbd5e1;
+        }
+
+        .btn-container {
+            text-align: right;
+            margin-top: 15px;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            background-color: #2563eb;
+            color: #ffffff;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #1d4ed8;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .btn-container {
+                display: none !important;
+            }
+            .card {
+                border: 1px solid #cbd5e1;
+                box-shadow: none;
+                margin-bottom: 12px;
+                padding: 12px;
+            }
+            input, textarea {
+                border: none !important;
+                background: transparent !important;
+            }
+            .textarea-box {
+                border: 1px solid #cbd5e1 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Atividade Prática: Previsão de Demanda & Estudo de Caso</h1>
+        <p>Gestão da Produção e Operações – Análise Integrada</p>
+    </header>
+
+    <!-- METADADOS DA EQUIPE -->
+    <div class="card">
+        <div class="meta-grid">
+            <div class="meta-row">
+                <div class="meta-cell" style="width: 50%;">
+                    <span class="input-label">Nome da Equipe / Alunos:</span><br>
+                    <input type="text" class="input-field" placeholder="Ex: Ana Silva, Carlos Souza, João Lima">
+                </div>
+                <div class="meta-cell" style="width: 25%;">
+                    <span class="input-label">Curso / Turma:</span><br>
+                    <input type="text" class="input-field" placeholder="Ex: Engenharia - Turma A">
+                </div>
+                <div class="meta-cell" style="width: 25%;">
+                    <span class="input-label">Data de Realização:</span><br>
+                    <div class="date-display">17 de Agosto de 2026</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAINEL DE FÓRMULAS DE APOIO -->
+    <div class="formulas-card">
+        <h3>📐 Guia Rápido de Fórmulas para o Aluno</h3>
+        <div class="formulas-grid">
+            <div class="formula-col">
+                <div class="formula-item">
+                    <div class="formula-title">DESVIO ABSOLUTO MÉDIO (DAM)</div>
+                    <div class="formula-expr">DAM = Σ |E<sub>t</sub>| / n</div>
+                    <div class="formula-desc">E<sub>t</sub> = A<sub>t</sub> - F<sub>t</sub><br>n = Nº de períodos (8)</div>
+                </div>
+            </div>
+            <div class="formula-col">
+                <div class="formula-item">
+                    <div class="formula-title">ERRO QUADRÁTICO MÉDIO (EQM)</div>
+                    <div class="formula-expr">EQM = Σ E<sub>t</sub>² / n</div>
+                    <div class="formula-desc">E<sub>t</sub>² = Erro ao quadrado<br>n = Nº de períodos (8)</div>
+                </div>
+            </div>
+            <div class="formula-col">
+                <div class="formula-item">
+                    <div class="formula-title">ERRO PERCENTUAL ABSOLUTO (EPAM)</div>
+                    <div class="formula-expr">EPAM = [ Σ (|E<sub>t</sub>| / A<sub>t</sub>) * 100 ] / n</div>
+                    <div class="formula-desc">A<sub>t</sub> = Venda Real<br>n = Nº de períodos (8)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QUESTÃO 1: INDÚSTRIA DE ALIMENTOS -->
+    <div class="card">
+        <h2 class="section-title">QUESTÃO 1: Indústria de Alimentos – Lançamento de Marca</h2>
+        
+        <p class="text-p">
+            Esse caso trata do lançamento de uma nova marca, no mercado de pratos prontos congelados de uma grande empresa brasileira de alimentos. Essa indústria de alimentos há muito buscava uma inovação que movimentasse o seu mercado de produtos congelados – que eram os <em>cash cows</em> da Cia. Algumas inovações já haviam sido lançadas, porém sem movimentar os volumes de produção.
+        </p>
+        <p class="text-p">
+            Depois de muitas análises do mercado (pesquisa com consumidores e opinião da força de vendas) e estudos etnográficos com consumidores-alvo, a empresa decidiu lançar uma nova linha de pratos congelados focada no mercado de porções individuais de comida caseira. A construção do <em>Business Case</em> (o projeto de lançamento da nova linha) previa um crescimento gradativo de volume ao longo do ano 1 do projeto, e previa que essa nova linha atingisse, no ano 5, metade do volume da maior linha de congelados já existente no portfólio.
+        </p>
+
+        <p class="text-p"><strong>Os pilares do lançamento foram:</strong></p>
+        <ul class="bullet-list">
+            <li>Atendimento de necessidades dos consumidores solteiros que viviam sozinhos ou casais sem filhos – comida caseira a qualquer hora, em porções individuais;</li>
+            <li>Receitas diferenciadas, para que suportassem o objetivo de entrega de comida caseira;</li>
+            <li>Distribuição pulverizada, para atingir ao maior número possível de consumidores.</li>
+        </ul>
+
+        <p class="text-p">
+            A nova linha teve tamanha aceitação dos consumidores que o volume de vendas previsto para o final do ano 1 foi atingido no 3º mês de vendas. O mercado de pratos prontos congelados saltou de um crescimento de 8 a 9%, ao ano, para 25%, no primeiro ano do lançamento. No ano 2, a nova linha já havia atingido o objetivo interno de ser metade do volume da maior linha de congelados do portfólio.
+        </p>
+
+        <p class="text-p"><strong>As previsões de demanda consideradas no Business Case tiveram de ser revistas já no mês 3 de seu lançamento, o que ocasionou:</strong></p>
+        <ul class="bullet-list">
+            <li>Mudança na previsão de demanda de todo o Business Case, aumentando significativamente os volumes já para os anos 1 e 2.</li>
+            <li>Capacitação da planta produtiva para produzir somente a nova linha de produtos – foi necessário realizar um grande <em>delist</em> (retirada) de todos os outros pratos prontos existentes no portfólio, e que estavam na curva C de volumes, para a liberação da linha para os novos produtos.</li>
+            <li>Forte movimento em conjunto com toda a cadeia produtiva, para suprir rapidamente a planta com as matérias-primas necessárias para a produção.</li>
+        </ul>
+
+        <p class="text-p"><strong>Desafios:</strong></p>
+        
+        <div style="margin-top: 10px;">
+            <label style="font-weight: bold; font-size: 0.88rem;">1. Como conseguir agregar esforços de todas as áreas da empresa e dos fornecedores para suprir a demanda não esperada e de tamanho sucesso desse lançamento?</label>
+            <textarea class="textarea-box" placeholder="Espaço para resposta discursiva do aluno..."></textarea>
+        </div>
+
+        <div style="margin-top: 8px;">
+            <label style="font-weight: bold; font-size: 0.88rem;">2. Quanto ainda esse mercado irá crescer nos próximos anos e como manter os consumidores fiéis a essa linha de produtos?</label>
+            <textarea class="textarea-box" placeholder="Espaço para resposta discursiva do aluno..."></textarea>
+        </div>
+    </div>
+
+    <!-- QUESTÃO 2: INDÚSTRIA QUÍMICA (ENUNCIADO E QUADRO 1) -->
+    <div class="card">
+        <h2 class="section-title">QUESTÃO 2: Previsão de Vendas – Indústria Química</h2>
+        
+        <p class="text-p">
+            Uma empresa fabricante de um produto químico utilizado como matéria-prima na produção de produtos de limpeza deseja analisar o comportamento de suas vendas ao longo do ano de 2025. A quantidade vendida, em toneladas por mês, está apresentada no <strong>Quadro 1</strong>.
+        </p>
+        <p class="text-p">
+            A empresa deseja avaliar diferentes métodos para realizar suas previsões de vendas. Para isso, serão utilizados dois métodos:
+        </p>
+        <ul class="bullet-list">
+            <li><strong>Média móvel de 4 períodos:</strong> considerando os quatro períodos imediatamente anteriores;</li>
+            <li><strong>Média simples:</strong> considerando a média de todos os períodos anteriores disponíveis.</li>
+        </ul>
+        <p class="text-p">
+            As previsões deverão ser calculadas para os meses de <strong>maio a dezembro de 2025</strong>.
+        </p>
+
+        <p style="font-weight: bold; margin-top: 10px; margin-bottom: 6px; font-size: 0.85rem;">Quadro 1 – Vendas mensais de 2025 (t)</p>
+        <div class="table-responsive" style="max-width: 400px;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mês</th>
+                        <th>Vendas em 2025 (t)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Janeiro</td><td>520</td></tr>
+                    <tr><td>Fevereiro</td><td>545</td></tr>
+                    <tr><td>Março</td><td>530</td></tr>
+                    <tr><td>Abril</td><td>555</td></tr>
+                    <tr><td>Maio</td><td>540</td></tr>
+                    <tr><td>Junho</td><td>525</td></tr>
+                    <tr><td>Julho</td><td>550</td></tr>
+                    <tr><td>Agosto</td><td>535</td></tr>
+                    <tr><td>Setembro</td><td>560</td></tr>
+                    <tr><td>Outubro</td><td>545</td></tr>
+                    <tr><td>Novembro</td><td>555</td></tr>
+                    <tr><td>Dezembro</td><td>570</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- QUESTÃO 3: TABELA COMPARATIVA -->
+    <div class="card">
+        <h2 class="section-title">Questão 3 – Tabela Comparativa de Previsões</h2>
+        <p class="text-p">
+            Preencha a tabela comparativa abaixo com as previsões para os meses de <strong>Maio a Dezembro de 2025</strong>. Os valores inseridos serão integrados automaticamente às tabelas de erro da Questão 4.
+        </p>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mês</th>
+                        <th>Vendas reais (A<sub>t</sub>)</th>
+                        <th>Previsão – Média móvel (4)</th>
+                        <th>Previsão – Média simples</th>
+                    </tr>
+                </thead>
+                <tbody id="q3_body">
+                    <!-- JS Injected -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- QUESTÃO 4: INDICADORES MÊS A MÊS -->
+    <div class="card">
+        <h2 class="section-title">Questão 4 – Análise de Erros Mês a Mês</h2>
+
+        <h3 style="font-size: 0.92rem; color: #1b365d; margin: 10px 0 6px 0;">a) Indicadores de Erro – Média Móvel de 4 Períodos</h3>
+        <p class="text-p" style="font-size: 0.8rem; color: #64748b;">(A coluna 'Previsto' é preenchida automaticamente a partir da Questão 3)</p>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mês</th>
+                        <th>A<sub>t</sub></th>
+                        <th>Previsto (F<sub>t</sub>)</th>
+                        <th>Erro E<sub>t</sub> (A<sub>t</sub> - F<sub>t</sub>)</th>
+                        <th>|E<sub>t</sub>|</th>
+                        <th>E<sub>t</sub>²</th>
+                        <th>|E<sub>t</sub>| / A<sub>t</sub> (%)</th>
+                    </tr>
+                </thead>
+                <tbody id="q4a_body">
+                    <!-- JS Injected -->
+                </tbody>
+            </table>
+        </div>
+
+        <h3 style="font-size: 0.92rem; color: #1b365d; margin: 16px 0 6px 0;">b) Indicadores de Erro – Média Simples</h3>
+        <p class="text-p" style="font-size: 0.8rem; color: #64748b;">(A coluna 'Previsto' é preenchida automaticamente a partir da Questão 3)</p>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mês</th>
+                        <th>A<sub>t</sub></th>
+                        <th>Previsto (F<sub>t</sub>)</th>
+                        <th>Erro E<sub>t</sub> (A<sub>t</sub> - F<sub>t</sub>)</th>
+                        <th>|E<sub>t</sub>|</th>
+                        <th>E<sub>t</sub>²</th>
+                        <th>|E<sub>t</sub>| / A<sub>t</sub> (%)</th>
+                    </tr>
+                </thead>
+                <tbody id="q4b_body">
+                    <!-- JS Injected -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- QUESTÃO 5: INDICADORES GLOBAIS -->
+    <div class="card">
+        <h2 class="section-title">Questão 5 – Consolidação dos Indicadores Globais</h2>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Indicador Global</th>
+                        <th>Fórmula</th>
+                        <th>Média Móvel (4)</th>
+                        <th>Média Simples</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>DAM</strong> (Desvio Absoluto Médio)</td>
+                        <td>Σ |E<sub>t</sub>| / n</td>
+                        <td><input type="text" class="table-input" placeholder="Ex: 13,59"></td>
+                        <td><input type="text" class="table-input" placeholder="Ex: 14,83"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>EQM</strong> (Erro Quadrático Médio)</td>
+                        <td>Σ E<sub>t</sub>² / n</td>
+                        <td><input type="text" class="table-input" placeholder="Ex: 237,30"></td>
+                        <td><input type="text" class="table-input" placeholder="Ex: 280,48"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>EPAM</strong> (Erro % Absoluto Médio)</td>
+                        <td>[ Σ (|E<sub>t</sub>| / A<sub>t</sub>) * 100 ] / n</td>
+                        <td><input type="text" class="table-input" placeholder="Ex: 2,48%"></td>
+                        <td><input type="text" class="table-input" placeholder="Ex: 2,71%"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- QUESTÃO 6: COMPARAÇÃO E RECOMENDAÇÃO -->
+    <div class="card">
+        <h2 class="section-title">Questão 6 – Comparação dos Métodos e Recomendação</h2>
+        <p class="text-p">
+            Compare os resultados obtidos pelos dois métodos. Qual método apresentou o menor DAM, EQM e EPAM? Com base nos indicadores calculados, qual dos dois métodos você recomendaria à empresa para realizar suas previsões de vendas? Justifique sua resposta.
+        </p>
+        <textarea class="textarea-box" style="min-height: 100px;" placeholder="Digite a comparação e a justificativa técnica recomendada..."></textarea>
+    </div>
+
+    <div class="btn-container">
+        <button class="btn" onclick="window.print()">🖨️ Imprimir / Salvar em PDF</button>
+    </div>
+
+</div>
+
+<script>
+    const salesData = [
+        { month: 'Jan', sales: 520, fillable: false },
+        { month: 'Fev', sales: 545, fillable: false },
+        { month: 'Mar', sales: 530, fillable: false },
+        { month: 'Abr', sales: 555, fillable: false },
+        { month: 'Maio', sales: 540, fillable: true },
+        { month: 'Junho', sales: 525, fillable: true },
+        { month: 'Julho', sales: 550, fillable: true },
+        { month: 'Agosto', sales: 535, fillable: true },
+        { month: 'Setembro', sales: 560, fillable: true },
+        { month: 'Outubro', sales: 545, fillable: true },
+        { month: 'Novembro', sales: 555, fillable: true },
+        { month: 'Dezembro', sales: 570, fillable: true }
+    ];
+
+    const q3Body = document.getElementById('q3_body');
+    const q4aBody = document.getElementById('q4a_body');
+    const q4bBody = document.getElementById('q4b_body');
+
+    let fillIndex = 0;
+
+    salesData.forEach((item) => {
+        const tr = document.createElement('tr');
+        if (!item.fillable) {
+            tr.innerHTML = `
+                <td>${item.month}</td>
+                <td>${item.sales}</td>
+                <td style="color:#94a3b8; font-style:italic;">Período base</td>
+                <td style="color:#94a3b8; font-style:italic;">Período base</td>
+            `;
+        } else {
+            const idx = fillIndex;
+            tr.innerHTML = `
+                <td><strong>${item.month}</strong></td>
+                <td><strong>${item.sales}</strong></td>
+                <td><input type="number" step="any" class="table-input q3-mm4" data-idx="${idx}" oninput="syncData()" placeholder="Previsão MM4"></td>
+                <td><input type="number" step="any" class="table-input q3-ms" data-idx="${idx}" oninput="syncData()" placeholder="Previsão MS"></td>
+            `;
+            fillIndex++;
+        }
+        q3Body.appendChild(tr);
+    });
+
+    // Render Q4a & Q4b for fillable months
+    const evalMonths = salesData.filter(d => d.fillable);
+
+    evalMonths.forEach((item, idx) => {
+        // 4a
+        const trA = document.createElement('tr');
+        trA.innerHTML = `
+            <td><strong>${item.month}</strong></td>
+            <td>${item.sales}</td>
+            <td><input type="text" class="table-input readonly-input" id="prev_mm4_${idx}" readonly placeholder="-"></td>
+            <td><input type="number" step="any" class="table-input" placeholder="Et"></td>
+            <td><input type="number" step="any" class="table-input" placeholder="|Et|"></td>
+            <td><input type="number" step="any" class="table-input" placeholder="Et²"></td>
+            <td><input type="number" step="any" class="table-input" placeholder="%"></td>
+        `;
+        q4aBody.appendChild(trA);
+
+        // 4b
+        const trB = document.createElement('tr');
+        trB.innerHTML = `
+            <td><strong>${item.month}</strong></td>
+            <td>${item.sales}</td>
+            <td><input type="text" class="table-input readonly-input" id="prev_ms_${idx}" readonly placeholder="-"></td>
+            <td><input type="number" step="any" class="table-input" placeholder="Et"></td>
+            <td><input type="number" step="any" class="table-input" placeholder="|Et|"></td>
+            <td><input type="number" step="any" class="table-input" placeholder="Et²"></td>
+            <td><input type="number" step="any" class="table-input" placeholder="%"></td>
+        `;
+        q4bBody.appendChild(trB);
+    });
+
+    function syncData() {
+        const mm4Inputs = document.querySelectorAll('.q3-mm4');
+        const msInputs = document.querySelectorAll('.q3-ms');
+
+        mm4Inputs.forEach((inp, i) => {
+            const target = document.getElementById(`prev_mm4_${i}`);
+            if (target) target.value = inp.value;
+        });
+
+        msInputs.forEach((inp, i) => {
+            const target = document.getElementById(`prev_ms_${i}`);
+            if (target) target.value = inp.value;
+        });
+    }
+</script>
+
+</body>
+</html>
