@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade em Grupo - Construção Estratégica de uma Empresa Fictícia</title>
+    <!-- FontAwesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- html2pdf.js para exportar em PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+        :root {
+            --primary-color: #1b365d;
+            --secondary-color: #0d6efd;
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --border-color: #dee2e6;
+            --swot-strenght: #d1e7dd;
+            --swot-weakness: #f8d7da;
+            --swot-opportunity: #cff4fc;
+            --swot-threat: #fff3cd;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #333;
+        }
+
+        /* Container do Botão e Ações */
+        .controls {
+            width: 100%;
+            max-width: 900px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn-pdf {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-pdf:hover {
+            background-color: #0f2341;
+        }
+
+        /* Documento Principal */
+        #document-printable {
+            width: 100%;
+            max-width: 900px;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-sizing: border-box;
+        }
+
+        .header {
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 1.6rem;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .header h2 {
+            color: #555;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Seções e Formulários */
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .guidelines-list {
+            list-style-type: none;
+            padding-left: 5px;
+        }
+
+        .guidelines-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .guidelines-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .input-group label {
+            font-weight: bold;
+            font-size: 0.95rem;
+            color: #444;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 0.95rem;
+            background-color: #fafafa;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 90px;
+            line-height: 1.4;
+        }
+
+        /* Layout Empilhado (1 Coluna) para a Análise SWOT */
+        .swot-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .swot-box {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 12px 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .swot-box h4 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .swot-box.forcas { background-color: var(--swot-strenght); color: #0f5132; border-color: #badbcc; }
+        .swot-box.fraquezas { background-color: var(--swot-weakness); color: #842029; border-color: #f5c2c7; }
+        .swot-box.oportunidades { background-color: var(--swot-opportunity); color: #055160; border-color: #b6effb; }
+        .swot-box.ameacas { background-color: var(--swot-threat); color: #664d03; border-color: #ffecb5; }
+
+        .swot-box textarea {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            min-height: 90px;
+        }
+
+        /* Lista Porter */
+        .porter-item {
+            margin-bottom: 15px;
+            background-color: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .porter-item label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 6px;
+            color: #222;
+        }
+
+        .print-text {
+            display: none;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: #111;
+        }
+
+        /* --- ESTILOS DE RENDERIZAÇÃO PARA O PDF --- */
+        body.generating-pdf #document-printable {
+            box-shadow: none !important;
+            padding: 20px !important;
+            max-width: 100% !important;
+            width: 100% !important;
+        }
+
+        body.generating-pdf textarea, 
+        body.generating-pdf input[type="text"] {
+            display: none !important;
+        }
+
+        body.generating-pdf .print-text {
+            display: block !important;
+            border-bottom: 1px dashed rgba(0,0,0,0.2);
+            padding-bottom: 6px;
+            margin-top: 4px;
+            min-height: 24px;
+        }
+
+        body.generating-pdf .swot-box {
+            page-break-inside: avoid;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Botão de Exportação -->
+    <div class="controls">
+        <button class="btn-pdf" onclick="generatePDF()">
+            <i class="fa-solid fa-file-pdf"></i> Salvar / Exportar PDF
+        </button>
+    </div>
+
+    <!-- Conteúdo do Documento -->
+    <div id="document-printable">
+        
+        <!-- Cabeçalho -->
+        <div class="header">
+            <h1>Atividade em Grupo</h1>
+            <h2>Construção Estratégica de uma Empresa Fictícia</h2>
+        </div>
+
+        <!-- Orientações e Integrantes -->
+        <div class="section">
+            <div class="input-group">
+                <label for="team-members"><i class="fa-solid fa-users"></i> Membros da equipe:</label>
+                <input type="text" id="team-members" placeholder="Nome dos integrantes do grupo...">
+                <div class="print-text" id="print-team-members"></div>
+            </div>
+
+            <div class="section-title"><i class="fa-solid fa-circle-info"></i> Orientações Gerais</div>
+            <ul class="guidelines-list">
+                <li>A atividade deverá ser realizada em grupos de até quatro estudantes.</li>
+                <li>Cada grupo deverá criar uma empresa fictícia de livre escolha.</li>
+                <li>Recomenda-se escolher um segmento conhecido pelos integrantes para facilitar a análise estratégica.</li>
+                <li>Todas as informações deverão apresentar coerência entre si.</li>
+                <li>As decisões tomadas na criação da empresa deverão ser justificadas considerando o mercado escolhido.</li>
+                <li>O trabalho deverá ser elaborado manualmente, sem uso de celulares ou recursos digitais.</li>
+            </ul>
+        </div>
+
+        <!-- Parte 1 -->
+        <div class="section">
+            <div class="section-title">Parte 1: Identificação da Empresa</div>
+            
+            <div class="input-group">
+                <label for="company-name">Nome da empresa:</label>
+                <input type="text" id="company-name" placeholder="Digite o nome da empresa fictícia...">
+                <div class="print-text" id="print-company-name"></div>
+            </div>
+
+            <div class="input-group">
+                <label for="company-desc">Descrição Estratégica da Empresa:</label>
+                <p style="font-size: 0.85rem; color: #666; margin-bottom: 5px;">
+                    O que a empresa faz? Quais produtos e/ou serviços oferece? Quem são seus clientes? 
+                    Qual necessidade do mercado pretende atender? Qual será seu principal diferencial competitivo?
+                </p>
+                <textarea id="company-desc" placeholder="Escreva a descrição detalhada aqui..."></textarea>
+                <div class="print-text" id="print-company-desc"></div>
+            </div>
+        </div>
+
+        <!-- Parte 2 -->
+        <div class="section">
+            <div class="section-title">Parte 2. Análise SWOT</div>
+            <p style="font-size: 0.9rem; margin-bottom: 10px;">
+                Realizem a análise dos ambientes interno e externo da empresa.
+            </p>
+            <ul class="guidelines-list" style="font-size: 0.88rem; margin-bottom: 15px;">
+                <li>Apresentem no mínimo dois aspectos para cada quadrante (Forças, Fraquezas, Oportunidades e Ameaças);</li>
+                <li>Os aspectos devem estar relacionados diretamente à empresa criada, considerando seu segmento, produtos/serviços e mercado de atuação;</li>
+                <li>Evitem respostas genéricas ou sem explicação. Sempre que necessário, apresentem uma breve justificativa para demonstrar porque aquele aspecto representa uma força, fraqueza, oportunidade ou ameaça.</li>
+            </ul>
+
+            <!-- Blocos SWOT Empilhados -->
+            <div class="swot-container">
+                <div class="swot-box forcas">
+                    <h4><i class="fa-solid fa-shield-halved"></i> Forças</h4>
+                    <textarea id="swot-f" placeholder="Listar forças..."></textarea>
+                    <div class="print-text" id="print-swot-f"></div>
+                </div>
+                <div class="swot-box fraquezas">
+                    <h4><i class="fa-solid fa-triangle-exclamation"></i> Fraquezas</h4>
+                    <textarea id="swot-w" placeholder="Listar fraquezas..."></textarea>
+                    <div class="print-text" id="print-swot-w"></div>
+                </div>
+                <div class="swot-box oportunidades">
+                    <h4><i class="fa-solid fa-chart-line"></i> Oportunidades</h4>
+                    <textarea id="swot-o" placeholder="Listar oportunidades..."></textarea>
+                    <div class="print-text" id="print-swot-o"></div>
+                </div>
+                <div class="swot-box ameacas">
+                    <h4><i class="fa-solid fa-skull-crossbones"></i> Ameaças</h4>
+                    <textarea id="swot-t" placeholder="Listar ameaças..."></textarea>
+                    <div class="print-text" id="print-swot-t"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Parte 3 -->
+        <div class="section">
+            <div class="section-title">Parte 3. Análise das Cinco Forças de Porter</div>
+            <p style="font-size: 0.9rem; margin-bottom: 15px;">
+                Analisem o ambiente competitivo da empresa. Para cada item, apresentem a resposta devidamente justificada.
+            </p>
+
+            <div class="porter-item">
+                <label for="porter-1">1) Rivalidade entre concorrentes</label>
+                <textarea id="porter-1" placeholder="Análise e justificativa..."></textarea>
+                <div class="print-text" id="print-porter-1"></div>
+            </div>
+
+            <div class="porter-item">
+                <label for="porter-2">2) Ameaça de novos entrantes</label>
+                <textarea id="porter-2" placeholder="Análise e justificativa..."></textarea>
+                <div class="print-text" id="print-porter-2"></div>
+            </div>
+
+            <div class="porter-item">
+                <label for="porter-3">3) Ameaça de produtos ou serviços substitutos</label>
+                <textarea id="porter-3" placeholder="Análise e justificativa..."></textarea>
+                <div class="print-text" id="print-porter-3"></div>
+            </div>
+
+            <div class="porter-item">
+                <label for="porter-4">4) Poder de negociação dos fornecedores</label>
+                <textarea id="porter-4" placeholder="Análise e justificativa..."></textarea>
+                <div class="print-text" id="print-porter-4"></div>
+            </div>
+
+            <div class="porter-item">
+                <label for="porter-5">5) Poder de negociação dos clientes</label>
+                <textarea id="porter-5" placeholder="Análise e justificativa..."></textarea>
+                <div class="print-text" id="print-porter-5"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Script de Manipulação e Exportação PDF -->
+    <script>
+        function generatePDF() {
+            const element = document.getElementById('document-printable');
+
+            // Passa os valores digitados para as divs de exibição antes do PDF
+            const inputs = element.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+                const printDiv = document.getElementById('print-' + input.id);
+                if (printDiv) {
+                    printDiv.innerText = input.value.trim() !== "" ? input.value : "__________________________________________________";
+                }
+            });
+
+            // Ativa o modo PDF
+            document.body.classList.add('generating-pdf');
+
+            const companyName = document.getElementById('company-name').value.trim() || 'Empresa_Ficticia';
+
+            const options = {
